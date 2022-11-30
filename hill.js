@@ -42,7 +42,8 @@ export class Hill {
         let prevCy = cur.y;
 
         
-        let csx=[]; //확인용
+        // let csx=[]; //확인용
+
         for(let i = 0 ; i < this.points.length; i++){
             cur = this.points[i];
             cur.x += this.speed;
@@ -51,7 +52,7 @@ export class Hill {
             }
             const cx = (prev.x + cur.x) / 2;
             const cy = (prev.y + cur.y) / 2;
-            csx.push({x: cx, y: cy});//확인용
+            // csx.push({x: cx, y: cy});//확인용
             ctx.quadraticCurveTo(prev.x, prev.y, cx, cy);
 
             dots.push({
@@ -77,14 +78,14 @@ export class Hill {
         //색칠 범위 지정
         ctx.fill();
         
-        ctx.closePath();//확인용
+        /*ctx.closePath();//확인용
         for(let i = 0; i < csx.length; i++){
             ctx.beginPath();
             ctx.fillStyle = '#ffffff';
             ctx.arc(csx[i].x, csx[i].y, 10, 0, 2 * Math.PI);
             ctx.fill();
             ctx.closePath();
-        }
+        }*/
 
         return dots;
     }

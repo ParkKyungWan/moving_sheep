@@ -63,6 +63,9 @@ export class Sheep {
     getY(x, dots){
         for( let i = 1; i < dots.length; i++){
             if( x>= dots[i].x1 && x <= dots[i].x3) {
+                if( x > dots[i].x3-3 && i+1 <dots.length){
+                    return this.getY2(x+3,dots[i+1]) //끝부분 보정
+                }
                 return this.getY2(x,dots[i]);
             }
         }
@@ -74,14 +77,15 @@ export class Sheep {
 
     getY2(x, dot){
         const total = 200;
-        let pt = this.getPointOnQuad(dot.x1, dot.y1, dot.x2, dot.y2, dot.x3, dot.y3,0);
+        let pt = this.getPointOnQuad(dot.x1, dot.y1, dot.x2, dot.y2, dot.x3, dot.y3,1);
         let prevPt = pt;
-        for(let i = 1; i < total; i++){
+        for(let i = 0; i < total; i++){
+            
             const t = i/ total;
             pt = this.getPointOnQuad(dot.x1, dot.y1, dot.x2, dot.y2, dot.x3, dot.y3, t);
             
             if( x>=prevPt.x && x <= pt.x){
-                return this.getPointWithRotation(pt,prevPt);
+                return this.getPointWithRotation(pt, prevPt);
             }
             prevPt = pt;
         }
@@ -101,7 +105,6 @@ export class Sheep {
         let dx = pt.x - prevPt.x;
         let dy = pt.y - prevPt.y;
         const rotation = -Math.atan2(dx, dy) + (90*Math.PI/ 180);
-        console.log(rotation)
         return {
             x: pt.x,
             y: pt.y,
